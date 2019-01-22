@@ -17,8 +17,9 @@ public class Bar {
         this.drink = null;
     }
 
-    public synchronized void putDrink(String drink) {
+    public synchronized String putDrink(String drink) {
         this.drink = drink;
         notifyAll();
+        return drink;
     }
 }
