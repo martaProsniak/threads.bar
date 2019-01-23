@@ -31,7 +31,7 @@ public class Client implements Runnable {
             try {
                 String drink = bar.takeDrink();
                 System.out.println(name + " drinks " + drink);
-                int time = bar.takeDrink().length();
+                int time = bar.takeDrink().length() * 1000;
                 Thread.sleep(time);
             } catch (InterruptedException ex) {
                 log.log(Level.WARNING, ex.getMessage(), ex);

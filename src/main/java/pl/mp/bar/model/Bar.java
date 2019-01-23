@@ -1,27 +1,21 @@
 package pl.mp.bar.model;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Bar representation.
  */
 public class Bar {
 
-    private static final Logger log = Logger.getLogger(Bar.class.getCanonicalName());
     /**
      * Drink from the bar.
      */
-    private String drink;
 
-    public String getDrink() {
-        return drink;
-    }
-
-    public void setDrink(String drink) {
-        this.drink = drink;
-    }
-
+    /**
+     * List with prepared drinks.
+     */
+    private List<String> drinkList = new ArrayList<>();
 
     /**
      * Gets drink and change drink field value to null.
@@ -30,11 +24,11 @@ public class Bar {
      * @throws InterruptedException
      */
     public synchronized String takeDrink() throws InterruptedException {
-        while (drink == null) {
+        while (drinkList.isEmpty()) {
             wait();
         }
-        String readyDrink = drink;
-        this.drink = null;
+        String readyDrink = drinkList.get(0);
+        drinkList.remove(0);
         return readyDrink;
     }
 
@@ -44,7 +38,7 @@ public class Bar {
      * @param drink new value for drink field.
      */
     public synchronized void putDrink(String drink) {
-        this.drink = drink;
+        drinkList.add(drink);
         notifyAll();
     }
 }
