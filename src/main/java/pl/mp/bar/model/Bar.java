@@ -9,10 +9,6 @@ import java.util.List;
 public class Bar {
 
     /**
-     * Drink from the bar.
-     */
-
-    /**
      * List with prepared drinks.
      */
     private List<String> drinkList = new ArrayList<>();
