@@ -22,24 +22,21 @@ public class Bar {
         this.drink = drink;
     }
 
-    private String[] drinks = {"Thunderbolt", "Blizzard", "Swallow", "Cat", "Black blood"};
 
-    public synchronized void takeDrink() throws InterruptedException {
-        while (drink.equals(null)) {
+
+    public synchronized String takeDrink() throws InterruptedException {
+        while (drink == null) {
             wait();
         }
+        String readyDrink = drink;
         this.drink = null;
+        return readyDrink;
     }
 
-    public synchronized void putDrink() {
-        for (int i = 0; i < drinks.length; i++) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                log.log(Level.WARNING, ex.getMessage(), ex);
-            }
-            this.drink = drinks[i];
+
+    public synchronized void putDrink(String drink) {
+            this.drink = drink;
             notifyAll();
-        }
     }
 }
+

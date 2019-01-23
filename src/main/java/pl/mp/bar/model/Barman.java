@@ -14,19 +14,23 @@ public class Barman implements Runnable {
      */
     private Bar bar;
 
+    private String[] drinks = {"Thunderbolt", "Blizzard", "Swallow", "Cat", "Black blood"};
+
     public Barman(Bar bar) {
         this.bar = bar;
     }
 
+    @Override
     public void run() {
         while (!Thread.interrupted()) {
-            try {
-                bar.putDrink();
-                Thread.sleep(1000);
-            } catch (InterruptedException ex){
-                log.log(Level.WARNING, ex.getMessage(), ex);
+            for (int i = 0; i < drinks.length; i++) {
+                try {
+                    bar.putDrink(drinks[i]);
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    log.log(Level.WARNING, ex.getMessage(), ex);
+                }
             }
         }
     }
-
 }
