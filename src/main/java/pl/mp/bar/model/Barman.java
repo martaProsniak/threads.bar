@@ -7,13 +7,16 @@ import java.util.logging.Logger;
  * Barman representation.
  */
 public class Barman implements Runnable {
-
+    //new logger to log errors
     public static final Logger log = Logger.getLogger(Barman.class.getCanonicalName());
     /**
      * Barman's bar.
      */
     private Bar bar;
 
+    /**
+     * Array with available drinks.
+     */
     private String[] drinks = {"Thunderbolt", "Blizzard", "Swallow", "Cat", "Black blood"};
 
     public Barman(Bar bar) {
@@ -29,6 +32,7 @@ public class Barman implements Runnable {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     log.log(Level.WARNING, ex.getMessage(), ex);
+                    break;
                 }
             }
         }

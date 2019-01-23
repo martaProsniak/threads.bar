@@ -23,7 +23,12 @@ public class Bar {
     }
 
 
-
+    /**
+     * Gets drink and change drink field value to null.
+     *
+     * @return ready drink to be taken by client.
+     * @throws InterruptedException
+     */
     public synchronized String takeDrink() throws InterruptedException {
         while (drink == null) {
             wait();
@@ -33,10 +38,14 @@ public class Bar {
         return readyDrink;
     }
 
-
+    /**
+     * Changes value of drink field.
+     *
+     * @param drink new value for drink field.
+     */
     public synchronized void putDrink(String drink) {
-            this.drink = drink;
-            notifyAll();
+        this.drink = drink;
+        notifyAll();
     }
 }
 

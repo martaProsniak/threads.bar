@@ -5,7 +5,6 @@ import pl.mp.bar.model.Barman;
 import pl.mp.bar.model.Client;
 
 import java.util.Scanner;
-import java.util.TreeMap;
 
 public class BarMain {
 
@@ -18,9 +17,10 @@ public class BarMain {
         Client client1 = new Client("Geralt", bar);
         Client client2 = new Client("Yennefer", bar);
         Client client3 = new Client("Ciri", bar);
-        Client client4= new Client("Dandelion", bar);
+        Client client4 = new Client("Dandelion", bar);
         Client client5 = new Client("Zoltan", bar);
 
+        //New threads
         Thread thread1 = new Thread(barman);
         Thread thread2 = new Thread(client1);
         Thread thread3 = new Thread(client2);
@@ -35,10 +35,11 @@ public class BarMain {
         thread5.start();
         thread6.start();
 
+        //new Scanner object to read user input
         Scanner scanner = new Scanner(System.in);
-        while (true){
+        while (true) {
             String command = scanner.next();
-            if (command.equals("end")){
+            if (command.equals("end")) {
                 break;
             }
         }
