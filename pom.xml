@@ -8,5 +8,153 @@
     <artifactId>java-2018-11-17-bar</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <name>maven</name>
+
+    <!--Dependencies are other jar libraries. Maven is able to download them automatically from central repository.-->
+    <!--http://repo1.maven.org/maven2/-->
+    <!--https://search.maven.org/-->
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+            <scope>provided</scope><!--Provided dependencies are only used for compilation.-->
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--Plugin configuring compilation process.-->
+            <plugin>
+                <!--Plugins are also described by three params. -->
+                <groupId>org.apache.maven.plugins</groupId><!--Most of the wide used plugins come from apache.-->
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <!--Plugin added by default but version and configuration can be altered.-->
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!--Plugin for configuring how application jar archive will be generated.-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>2.6</version>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <!--Define main class when using java -jar command.-->
+                                    <mainClass>pl.mp.bar.BarMain</mainClass>
+                                    <!--Add external libraries.-->
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>lib/</classpathPrefix>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </plugin>
+
+                    <!--Plugin for generating nice JavaDoc archive.-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9</version>
+                        <configuration>
+                            <show>private</show>
+                            <nohelp>true</nohelp>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <!--Specified which goal from the plugin will be called.-->
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--Plugin for generating nice sources archive.-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <!--Specified which goal from the plugin will be called.-->
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--Plugin generates starting scripts for application.-->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId><!--Another quite well known plugin provider.-->
+                        <artifactId>appassembler-maven-plugin</artifactId>
+                        <version>2.0.0</version>
+                        <configuration>
+                            <programs>
+                                <program>
+                                    <mainClass>pl.mp.bar.BarMain</mainClass>
+                                    <id>app</id>
+                                </program>
+                            </programs>
+                            <platforms>
+                                <platform>windows</platform>
+                                <platform>unix</platform>
+                            </platforms>
+                            <assembleDirectory>${project.build.directory}/${project.build.finalName}</assembleDirectory>
+                            <repositoryName>lib</repositoryName>
+                            <useWildcardClassPath>true</useWildcardClassPath>
+                            <repositoryLayout>flat</repositoryLayout>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>assemble</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--Plugin creates ready to share zip package.-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>${basedir}/src/main/assembly/assembly.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase><!--Requires phase bind exact specification.-->
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
