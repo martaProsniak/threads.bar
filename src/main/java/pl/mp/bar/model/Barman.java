@@ -1,5 +1,6 @@
 package pl.mp.bar.model;
 
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +20,12 @@ public class Barman implements Runnable {
      */
     private String[] drinks = {"Thunderbolt", "Blizzard", "Swallow", "Cat", "Black blood"};
 
+    /**
+     * Random number generator to use in run method.
+     */
+    private Random random = new Random();
+
+
     public Barman(Bar bar) {
         this.bar = bar;
     }
@@ -26,14 +33,14 @@ public class Barman implements Runnable {
     @Override
     public void run() {
         while (!Thread.interrupted()) {
-            for (int i = 0; i < drinks.length; i++) {
-                try {
-                    bar.putDrink(drinks[i]);
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    log.log(Level.WARNING, ex.getMessage(), ex);
-                    break;
-                }
+            int i = random.nextInt(5); //random number between 0 and 4
+            try {
+                String drink = drinks[i];
+                bar.putDrink(drink);
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                break;
             }
         }
     }

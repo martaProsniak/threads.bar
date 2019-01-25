@@ -9,7 +9,19 @@ import java.util.Scanner;
 public class BarMain {
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+        barIsOpen();
+
+    }
+
+    /**
+     * Creates barman and client threads and starts them.
+     * Reads user command to end threads and programm.
+     */
+    private static void barIsOpen() {
+
+        System.out.println("Busy night, but there's always room for another! \n" +
+                "To leave, type: end");
 
         Bar bar = new Bar();
 
@@ -50,5 +62,7 @@ public class BarMain {
         thread4.interrupt();
         thread5.interrupt();
         thread6.interrupt();
+
+        System.out.println("Come back tomorrow!");
     }
 }

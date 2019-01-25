@@ -123,7 +123,6 @@
                         </executions>
                     </plugin>
 
-                    <!--Plugin generates starting scripts for application.-->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId><!--Another quite well known plugin provider.-->
                         <artifactId>appassembler-maven-plugin</artifactId>
@@ -152,6 +151,7 @@
                             </execution>
                         </executions>
                     </plugin>
+
 
                     <!--Plugin creates ready to share zip package.-->
                     <plugin>
